@@ -1,68 +1,70 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { nanoid } from "nanoid";
 import css from "./CardForm.module.css";
 
-class CardForm extends Component {
-    state = {
-        name: '',
-        number: '',
+export default function CardForm({onSubmit}) {
+    const [name, setName] = useState('');
+    const [number, setNumber] = useState('');
+
+    const nameInputId = nanoid();
+    const numberInputId = nanoid();
+
+    const fields = {name, number};
+
+    const handleInputChange = e => {
+        const { name, value } = e.target;
+        switch (name) {
+            case 'name':
+                setName(value);
+                break;
+            case 'number':
+                setNumber(value);
+                break;
+            default:
+                return;
+        }     
     }
 
-    nameInputId = nanoid();
-    numberInputId = nanoid();
-
-    handleInputChange = e => {
-        const {name, value} = e.currentTarget;
-        this.setState({
-          [name]: value,
-        });
-      };
-    
-    handleSubmit = e => {
+    const handleSubmit = e => {
         e.preventDefault();
-
-        this.props.onSubmit(this.state);
-
-        this.reset();
-      };
-
-    reset = () => {
-        this.setState({name: '', number: '',})
+        onSubmit(fields);
+        reset();
     }
 
-    render() {
+    const reset = () => {
+        setName('');
+        setNumber('');
+    }
+
         return (
-            <form onSubmit={this.handleSubmit}>
-            <label htmlFor={this.nameInputId} className={css.label}>
+            <form onSubmit={handleSubmit}>
+            <label htmlFor={nameInputId} className={css.label}>
               Name
               </label>
                 <input
                   type="text"
-                  id={this.nameInputId}
+                  id={nameInputId}
                   name="name"
-                  value={this.state.name}
+                  value={name}
                   pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
                   title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
                   required
-                  onChange={this.handleInputChange}
+                  onChange={handleInputChange}
                 />
-            <label htmlFor={this.numberInputId} className={css.label}>
+            <label htmlFor={numberInputId} className={css.label}>
               Number
             </label>
                 <input 
                   type="tel"
-                  id={this.numberInputId} 
+                  id={numberInputId} 
                   name="number"
-                  value={this.state.number}
+                  value={number}
                   pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
                   title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
                   required 
-                  onChange={this.handleInputChange}
+                  onChange={handleInputChange}
                 />
             <button type="submit" className={css.button}>Add contact</button>
           </form>
         );
-    }
 }
-
-export default CardForm;
