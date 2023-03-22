@@ -40,7 +40,7 @@ export default function App() {
     }
 
   const dublicateContact = data => {
-      setContacts(contacts.find(item => item.name ===data.name))
+      setContacts(contacts.find(item => item.name === data.name))
    }
  
   const changeFilter = e => {
@@ -49,11 +49,16 @@ export default function App() {
  
   const getVisibleContacts = () => {
      const normalizedFilter = filter.toLowerCase();
- 
-     return setContacts(state=>state.filter(contact => 
-       contact.name.toLowerCase().includes(normalizedFilter),
+
+     const filteredContacts = setContacts(state=>state.filter(contact => 
+       contact.name.toLowerCase().includes(normalizedFilter)
        ));
+
+      return filteredContacts;
    }
+
+   const visibleContacts = contacts.filter(contact => 
+    contact.name.toLowerCase().includes(filter.toLowerCase()));
 
   //    getVisibleContacts = () => {
   //   const {contacts, filter} = this.state;
@@ -64,8 +69,6 @@ export default function App() {
   //     contact.name.toLowerCase().includes(normalizedFilter),
   //     );
   // }
-
-   const visibleContacts = getVisibleContacts();
 
     return (
         <div
