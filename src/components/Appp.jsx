@@ -5,10 +5,14 @@ import initialContacts from "./phonebook/contacts.json";
 import Filter from "./phonebook/Filter";
 import { nanoid } from "nanoid";
 
+const useLocalStorage = (key, defaultValue) => {
+  const [state, setState] = useState(() => {
+    return JSON.parse(window.localStorage.getItem(key)) ?? defaultValue;  
+  })
+}
+
 export default function App() {
-    const [contacts, setContacts] = useState(() => {
-      return JSON.parse(window.localStorage.getItem('contacts')) ?? 'initialContacts';
-    });
+    const [contacts, setContacts] = useLocalStorage('contacts', initialContacts);
      
     const [filter, setFilter] = useState('');
 
