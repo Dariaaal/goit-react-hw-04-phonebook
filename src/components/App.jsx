@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import CardForm from "./phonebook/CardForm";
+import CardForm from "./phonebook/CardForm1";
 import CardList from "./phonebook/CardList";
 import initialContacts from "./phonebook/contacts.json";
 import Filter from "./phonebook/Filter";
