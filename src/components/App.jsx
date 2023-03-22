@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import CardForm from "./phonebook/CardForm";
 import CardList from "./phonebook/CardList";
 import initialContacts from "./phonebook/contacts.json";
@@ -60,13 +60,8 @@ export default function App() {
   //     return filteredContacts;
   //  }
 
-  const visibleContacts = useMemo(() => {
-    return contacts.filter(contact => 
-      contact.name.toLowerCase().includes(filter.toLowerCase()));
-  }, [filter, contacts])
-
-  //  const visibleContacts = contacts.filter(contact => 
-  //   contact.name.toLowerCase().includes(filter.toLowerCase()));
+   const visibleContacts = contacts.filter(contact => 
+    contact.name.toLowerCase().includes(filter.toLowerCase()));
 
   //    getVisibleContacts = () => {
   //   const {contacts, filter} = this.state;
