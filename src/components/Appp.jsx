@@ -9,20 +9,63 @@ const useLocalStorage = (key, defaultValue) => {
   const [state, setState] = useState(() => {
     return JSON.parse(window.localStorage.getItem(key)) ?? defaultValue;  
   })
+
+  return [state, setState]
 }
 
 export default function App() {
     const [contacts, setContacts] = useLocalStorage('contacts', initialContacts);
      
     const [filter, setFilter] = useState('');
-
-    const deleteContact = contactId => {
-        setContacts(contact => contact.filter(contact => contact.id !== contactId))
-    }
     
     useEffect(() => {
       window.localStorage.setItem('contacts', JSON.stringify(contacts));
     }, [contacts])
+
+    const deleteContact = contactId => {
+      setContacts(state => state.filter(contact => contact.id !== contactId))
+  }
+
+  const formSubmitHandler = data =>{
+
+    if (dublicateContact(data)) {
+      return alert (`${data.name} is already in contacts` )
+    }
+      const contact = {
+        id: nanoid(),
+        ...data
+      }
+
+      setContacts(prevState => ({contact, ...prevState}))
+    }
+
+  const dublicateContact = data => {
+      setContacts(contacts.find(item => item.name ===data.name))
+   }
+ 
+  const changeFilter = e => {
+    setFilter(e.currentTarget.value);
+   }
+ 
+  const getVisibleContacts = () => {
+     const normalizedFilter = filter.toLowerCase();
+ 
+     return setContacts(state=>state.filter(contact => 
+       contact.name.toLowerCase().includes(normalizedFilter),
+       ));
+   }
+
+  //    getVisibleContacts = () => {
+  //   const {contacts, filter} = this.state;
+
+  //   const normalizedFilter = filter.toLowerCase();
+
+  //   return contacts.filter(contact => 
+  //     contact.name.toLowerCase().includes(normalizedFilter),
+  //     );
+  // }
+
+   const visibleContacts = getVisibleContacts();
 
     return (
         <div
@@ -36,10 +79,11 @@ export default function App() {
             color: '#010101'
           }}
         >
+        
         <h1>Phonebook</h1>
-        <CardForm onSubmit={this.formSubmitHandler}/>
+        <CardForm onSubmit={formSubmitHandler}/>
         <h2>Contacts</h2>
-        <Filter filter={filter} onChangeFilter={this.changeFilter}/>
+        <Filter filter={filter} onChangeFilter={changeFilter}/>
         <CardList contacts={visibleContacts} onDeleteContact={deleteContact}/>
         </div>
       );
