@@ -36,11 +36,8 @@ export default function App() {
         ...data
       }
 
-      setContacts(prevState => [contact, ...prevState]);
+      setContacts([contact, ...contacts]);
     }
-    //       this.setState(prevState => ({
-//         contacts:[contact, ...prevState.contacts]
-//       }))
 
   const dublicateContact = data => {
       setContacts(contacts.find(item => item.name === data.name))
