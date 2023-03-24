@@ -31,7 +31,7 @@ export default function App() {
     if (dublicateContact(data)) {
       return alert (`${data.name} is already in contacts` )
     }
-    
+
       const contact = {
         id: nanoid(),
         ...data
@@ -41,7 +41,7 @@ export default function App() {
     }
 
   const dublicateContact = data => {
-      setContacts(contacts.find(item => item.name && item.number === data.name))
+      contacts.find(item => item.name === data.name);
    }
  
   const changeFilter = e => {
