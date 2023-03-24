@@ -26,6 +26,10 @@ export default function App() {
       setContacts(state => state.filter(contact => contact.id !== contactId))
   }
 
+  const dublicateContact = data => {
+    contacts.find(item => item.name === data.name);
+ }
+
   const formSubmitHandler = data =>{
 
     if (dublicateContact(data)) {
@@ -39,10 +43,6 @@ export default function App() {
 
       setContacts([contact, ...contacts]);
     }
-
-  const dublicateContact = data => {
-      contacts.find(item => item.name === data.name);
-   }
  
   const changeFilter = e => {
     setFilter(e.currentTarget.value);
