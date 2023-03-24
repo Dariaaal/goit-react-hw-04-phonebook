@@ -30,14 +30,14 @@ export default function App() {
 
     if (dublicateContact(data)) {
       return alert (`${data.name} is already in contacts` )
-    } else {
+    }
+    
       const contact = {
         id: nanoid(),
         ...data
       }
 
       setContacts([contact, ...contacts]);
-    }
     }
 
   const dublicateContact = data => {

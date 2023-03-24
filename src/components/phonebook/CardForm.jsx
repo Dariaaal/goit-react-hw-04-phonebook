@@ -9,7 +9,7 @@ export default function CardForm({onSubmit}) {
     const nameInputId = nanoid();
     const numberInputId = nanoid();
 
-    const fields = {name, number};
+    // const data = {name, number};
 
     const handleInputChange = e => {
         const { name, value } = e.target;
@@ -27,7 +27,7 @@ export default function CardForm({onSubmit}) {
 
     const handleSubmit = e => {
         e.preventDefault();
-        onSubmit(fields);
+        onSubmit({name, number});
         reset();
     }
 
