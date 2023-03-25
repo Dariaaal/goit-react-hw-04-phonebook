@@ -32,16 +32,16 @@ export default function App() {
 
   const formSubmitHandler = data =>{
 
-    if (dublicateContact(data)) {
-      return alert (`${data.name} is already in contacts` )
-    }
-
+    if (!dublicateContact(data)) {
       const contact = {
         id: nanoid(),
         ...data
       }
 
       setContacts([contact, ...contacts]);
+    }
+
+    return alert (`${data.name} is already in contacts` )
     }
  
   const changeFilter = e => {
